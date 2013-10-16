@@ -1,48 +1,22 @@
 Ext.define('Ladr.view.chart.View', {
-    alias: 'widget.chratview',
+    alias: 'widget.chartview',
     extend: 'Ext.panel.Panel',
 
-    requires: ['Ext.chart.*', 'Ext.layout.container.Fit', 'Ext.window.MessageBox'],
+    requires: [
+      'Ext.layout.container.Fit',
+      'Ladr.view.chart.CharPie'
+    ],
 
     initComponent: function() {
       Ext.apply(this, {
+        dockedItems: [
+          Ext.create('Ladr.view.Header', {
+              html: 'Chart'
+          })
+        ],
+        height: 600,
         layout: 'fit',
-        items: [{
-          xtype: 'chart',
-          id: 'charschart',
-          animate: true,
-          store: [],
-          shadow: true,
-          legend: {
-              position: 'right'
-          },
-          insetPadding: 60,
-          theme: 'Base:gradients',
-          series: [{
-            type: 'pie',
-            field: 'data',
-            showInLegend: true,
-            highlight: {
-              segment: {
-                  margin: 20
-              }
-            },
-            label: {
-                field: 'char',
-                display: 'rotate',
-                contrast: true,
-                font: '14px Verdana'
-            },
-            tips: {
-                trackMouse: true,
-                width: 140,
-                height: 28,
-                renderer: function(storeItem, item) {
-                    this.setTitle(storeItem.get('char') + ': ' + storeItem.get('data') + '%');
-                }
-            }
-          }]
-        }]
+        items: [ { xtype: 'charpie'} ]
       })
 
       this.callParent(arguments);
